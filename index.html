@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Formulario Institucional Voz a PDF</title>
+  <title>FICHA DE NOTIFICACIÓN DE ALERTA</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <style>
     body { font-family: Arial, sans-serif; margin: 40px; background: #f4f4f4; }
@@ -23,43 +23,16 @@
   <div class="formulario">
     <h2 style="color:#005a9e;">Formulario Institucional 🎤</h2>
     <div class="grid">
-      <!-- 9 campos -->
-      <div class="campo">
-        <label for="campo1">Nombre:</label>
-        <input type="text" id="campo1"><div><button onclick="grabar(1)">🎤</button><button onclick="limpiar(1)">❌</button></div>
-      </div>
-      <div class="campo">
-        <label for="campo2">Dirección:</label>
-        <input type="text" id="campo2"><div><button onclick="grabar(2)">🎤</button><button onclick="limpiar(2)">❌</button></div>
-      </div>
-      <div class="campo">
-        <label for="campo3">Teléfono:</label>
-        <input type="text" id="campo3"><div><button onclick="grabar(3)">🎤</button><button onclick="limpiar(3)">❌</button></div>
-      </div>
-      <div class="campo">
-        <label for="campo4">Correo:</label>
-        <input type="text" id="campo4"><div><button onclick="grabar(4)">🎤</button><button onclick="limpiar(4)">❌</button></div>
-      </div>
-      <div class="campo">
-        <label for="campo5">Institución:</label>
-        <input type="text" id="campo5"><div><button onclick="grabar(5)">🎤</button><button onclick="limpiar(5)">❌</button></div>
-      </div>
-      <div class="campo">
-        <label for="campo6">Cargo:</label>
-        <input type="text" id="campo6"><div><button onclick="grabar(6)">🎤</button><button onclick="limpiar(6)">❌</button></div>
-      </div>
-      <div class="campo">
-        <label for="campo7">Ciudad:</label>
-        <input type="text" id="campo7"><div><button onclick="grabar(7)">🎤</button><button onclick="limpiar(7)">❌</button></div>
-      </div>
-      <div class="campo">
-        <label for="campo8">País:</label>
-        <input type="text" id="campo8"><div><button onclick="grabar(8)">🎤</button><button onclick="limpiar(8)">❌</button></div>
-      </div>
-      <div class="campo">
-        <label for="campo9">Observaciones:</label>
-        <textarea id="campo9"></textarea><div><button onclick="grabar(9)">🎤</button><button onclick="limpiar(9)">❌</button></div>
-      </div>
+      <!-- Campos -->
+      <div class="campo"><label for="campo1">Nombre:</label><input type="text" id="campo1"><div><button onclick="grabar(1)">🎤</button><button onclick="limpiar(1)">❌</button></div></div>
+      <div class="campo"><label for="campo2">Dirección:</label><input type="text" id="campo2"><div><button onclick="grabar(2)">🎤</button><button onclick="limpiar(2)">❌</button></div></div>
+      <div class="campo"><label for="campo3">Teléfono:</label><input type="text" id="campo3"><div><button onclick="grabar(3)">🎤</button><button onclick="limpiar(3)">❌</button></div></div>
+      <div class="campo"><label for="campo4">Correo:</label><input type="text" id="campo4"><div><button onclick="grabar(4)">🎤</button><button onclick="limpiar(4)">❌</button></div></div>
+      <div class="campo"><label for="campo5">Institución:</label><input type="text" id="campo5"><div><button onclick="grabar(5)">🎤</button><button onclick="limpiar(5)">❌</button></div></div>
+      <div class="campo"><label for="campo6">Cargo:</label><input type="text" id="campo6"><div><button onclick="grabar(6)">🎤</button><button onclick="limpiar(6)">❌</button></div></div>
+      <div class="campo"><label for="campo7">Ciudad:</label><input type="text" id="campo7"><div><button onclick="grabar(7)">🎤</button><button onclick="limpiar(7)">❌</button></div></div>
+      <div class="campo"><label for="campo8">País:</label><input type="text" id="campo8"><div><button onclick="grabar(8)">🎤</button><button onclick="limpiar(8)">❌</button></div></div>
+      <div class="campo"><label for="campo9">Observaciones:</label><textarea id="campo9"></textarea><div><button onclick="grabar(9)">🎤</button><button onclick="limpiar(9)">❌</button></div></div>
     </div>
 
     <div class="acciones">
@@ -105,22 +78,23 @@
       doc.setFontSize(16);
       doc.text("Institución Ejemplo - Formulario", 105, 12, { align: "center" });
 
-      // Logo (ejemplo: rectángulo naranja)
-      doc.setFillColor(255, 102, 0); // naranja
+      // Logo naranja (ejemplo)
+      doc.setFillColor(255, 102, 0);
       doc.rect(10, 5, 10, 10, "F");
 
-      // Texto ingresado con medidas individuales
+      // Solo información ingresada
       doc.setTextColor(0, 0, 0);
       doc.setFontSize(12);
       let y = 40;
       for (let i = 1; i <= 9; i++) {
-        const label = document.querySelector("label[for=campo"+i+"]").innerText;
         const valor = document.getElementById("campo"+i).value;
-        doc.text(`${label}: ${valor}`, 20, y, { maxWidth: 170 });
-        y += 15; // espacio entre cada campo
+        if (valor.trim() !== "") {
+          doc.text(valor, 20, y, { maxWidth: 170 });
+          y += 20; // espacio amplio para cada texto
+        }
       }
 
-      doc.save("ficha de notificación de alerta.pdf");
+      doc.save("FICHA_DE_NOTIFICACIÓN_DE_ALERTA.pdf");
     }
   </script>
 </body>
