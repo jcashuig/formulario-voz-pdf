@@ -6,51 +6,62 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <style>
     body { font-family: Arial, sans-serif; margin: 40px; background: #f4f4f4; }
-    .formulario { background: #fff; padding: 20px; border-radius: 8px; max-width: 600px; margin: auto; }
-    input, textarea { width: 100%; padding: 10px; margin: 10px 0; }
-    button { padding: 10px 15px; margin: 5px; cursor: pointer; background: #0078d7; color: #fff; border: none; border-radius: 4px; }
-    button:hover { background: #005a9e; }
+    .formulario { background: #fff; padding: 20px; border-radius: 8px; max-width: 900px; margin: auto; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .campo { display: flex; align-items: center; margin: 10px 0; }
+    .campo input, .campo textarea { flex: 1; padding: 10px; }
+    .campo button { margin-left: 5px; padding: 8px; background: #0078d7; color: #fff; border: none; border-radius: 4px; cursor: pointer; }
+    .campo button:hover { background: #005a9e; }
     #preview { margin-top: 20px; background: #fff; padding: 15px; border-radius: 8px; }
+    .acciones { text-align: center; margin-top: 20px; }
+    .acciones button { padding: 10px 15px; margin: 5px; }
   </style>
 </head>
 <body>
   <div class="formulario">
     <h2>Formulario con Voz 🎤</h2>
+    <div class="grid">
+      <!-- Columna 1 -->
+      <div>
+        <div class="campo"><input type="text" id="campo1" placeholder="Campo 1"><button onclick="grabar(1)">🎤</button><button onclick="limpiar(1)">❌</button></div>
+        <div class="campo"><input type="text" id="campo2" placeholder="Campo 2"><button onclick="grabar(2)">🎤</button><button onclick="limpiar(2)">❌</button></div>
+        <div class="campo"><input type="text" id="campo3" placeholder="Campo 3"><button onclick="grabar(3)">🎤</button><button onclick="limpiar(3)">❌</button></div>
+        <div class="campo"><input type="text" id="campo4" placeholder="Campo 4"><button onclick="grabar(4)">🎤</button><button onclick="limpiar(4)">❌</button></div>
+        <div class="campo"><input type="text" id="campo5" placeholder="Campo 5"><button onclick="grabar(5)">🎤</button><button onclick="limpiar(5)">❌</button></div>
+      </div>
 
-    <!-- 9 campos -->
-    <label>nombre y apellido de estudiantes:</label><input type="text" id="campo1">
-    <label>Grado/curso y paralelo:</label><input type="text" id="campo2">
-    <label>descricion de la alerta:</label><input type="text" id="campo3">
-    <label>Campo 4:</label><input type="text" id="campo4">
-    <label>Campo 5:</label><input type="text" id="campo5">
-    <label>Campo 6:</label><input type="text" id="campo6">
-    <label>Campo 7:</label><input type="text" id="campo7">
-    <label>Campo 8:</label><input type="text" id="campo8">
-    <label>Campo 9:</label><textarea id="campo9"></textarea>
+      <!-- Columna 2 -->
+      <div>
+        <div class="campo"><input type="text" id="campo6" placeholder="Campo 6"><button onclick="grabar(6)">🎤</button><button onclick="limpiar(6)">❌</button></div>
+        <div class="campo"><input type="text" id="campo7" placeholder="Campo 7"><button onclick="grabar(7)">🎤</button><button onclick="limpiar(7)">❌</button></div>
+        <div class="campo"><input type="text" id="campo8" placeholder="Campo 8"><button onclick="grabar(8)">🎤</button><button onclick="limpiar(8)">❌</button></div>
+        <div class="campo"><textarea id="campo9" placeholder="Campo 9"></textarea><button onclick="grabar(9)">🎤</button><button onclick="limpiar(9)">❌</button></div>
+      </div>
+    </div>
 
-    <button onclick="iniciarVoz()">Hablar</button>
-    <button onclick="mostrar()">Visualizar</button>
-    <button onclick="generarPDF()">Generar PDF</button>
+    <div class="acciones">
+      <button onclick="mostrar()">Visualizar</button>
+      <button onclick="generarPDF()">Generar PDF</button>
+    </div>
   </div>
 
   <div id="preview"></div>
 
   <script>
-    // Configuración de reconocimiento de voz
     const reconocimiento = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
     reconocimiento.lang = "es-ES";
 
-    let campoActual = 1; // control para ir llenando los campos en orden
-
-    function iniciarVoz() {
+    function grabar(numCampo) {
       reconocimiento.start();
       reconocimiento.onresult = (event) => {
         const texto = event.results[0][0].transcript;
-        const campo = document.getElementById("campo" + campoActual);
-        campo.value += texto + " ";
-        // Avanza al siguiente campo automáticamente
-        if (campoActual < 9) campoActual++;
+        const campo = document.getElementById("campo" + numCampo);
+        campo.value = texto; // sobrescribe el contenido
       };
+    }
+
+    function limpiar(numCampo) {
+      document.getElementById("campo" + numCampo).value = "";
     }
 
     function mostrar() {
@@ -63,9 +74,8 @@
 
     async function generarPDF() {
       const { jsPDF } = window.jspdf;
-
-      // Formato A4 con márgenes definidos
       const doc = new jsPDF({ unit: "mm", format: "a4" });
+
       const margenIzq = 20;
       const margenSup = 30;
       const saltoLinea = 10;
@@ -76,6 +86,12 @@
         doc.text(`Campo ${i}: ${valor}`, margenIzq, y);
         y += saltoLinea;
       }
+
+      doc.save("formulario_9_campos.pdf");
+    }
+  </script>
+</body>
+</html>
 
       doc.save("formulario_9_campos.pdf");
     }
