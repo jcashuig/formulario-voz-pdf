@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Formulario Voz a PDF</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 40px; background: #f4f4f4; }
+    .formulario { background: #fff; padding: 20px; border-radius: 8px; max-width: 600px; margin: auto; }
+    input, textarea { width: 100%; padding: 10px; margin: 10px 0; }
+    button { padding: 10px 15px; margin: 5px; cursor: pointer; background: #0078d7; color: #fff; border: none; border-radius: 4px; }
+    button:hover { background: #005a9e; }
+    #preview { margin-top: 20px; background: #fff; padding: 15px; border-radius: 8px; }
+  </style>
+</head>
+<body>
+  <div class="formulario">
+    <h2>Formulario con Voz 🎤</h2>
+
+    <!-- 9 campos -->
+    <label>Campo 1:</label><input type="text" id="campo1">
+    <label>Campo 2:</label><input type="text" id="campo2">
+    <label>Campo 3:</label><input type="text" id="campo3">
+    <label>Campo 4:</label><input type="text" id="campo4">
+    <label>Campo 5:</label><input type="text" id="campo5">
+    <label>Campo 6:</label><input type="text" id="campo6">
+    <label>Campo 7:</label><input type="text" id="campo7">
+    <label>Campo 8:</label><input type="text" id="campo8">
+    <label>Campo 9:</label><textarea id="campo9"></textarea>
+
+    <button onclick="iniciarVoz()">Hablar</button>
+    <button onclick="mostrar()">Visualizar</button>
+    <button onclick="generarPDF()">Generar PDF</button>
+  </div>
+
+  <div id="preview"></div>
+
+  <script>
+    // Configuración de reconocimiento de voz
+    const reconocimiento = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+    reconocimiento.lang = "es-ES";
+
+    let campoActual = 1; // control para ir llenando los campos en orden
+
+    function iniciarVoz() {
+      reconocimiento.start();
+      reconocimiento.onresult = (event) => {
+        const texto = event.results[0][0].transcript;
+        const campo = document.getElementById("campo" + campoActual);
+        campo.value += texto + " ";
+        // Avanza al siguiente campo automáticamente
+        if (campoActual < 9) campoActual++;
+      };
+    }
+
+    function mostrar() {
+      let html = "<h3>Vista Previa</h3>";
+      for (let i = 1; i <= 9; i++) {
+        html += `<p><strong>Campo ${i}:</strong> ${document.getElementById("campo"+i).value}</p>`;
+      }
+      document.getElementById("preview").innerHTML = html;
+    }
+
+    async function generarPDF() {
+      const { jsPDF } = window.jspdf;
+
+      // Formato A4 con márgenes definidos
+      const doc = new jsPDF({ unit: "mm", format: "a4" });
+      const margenIzq = 20;
+      const margenSup = 30;
+      const saltoLinea = 10;
+
+      let y = margenSup;
+      for (let i = 1; i <= 9; i++) {
+        const valor = document.getElementById("campo"+i).value;
+        doc.text(`Campo ${i}: ${valor}`, margenIzq, y);
+        y += saltoLinea;
+      }
+
+      doc.save("formulario_9_campos.pdf");
+    }
+  </script>
+</body>
+</html>
