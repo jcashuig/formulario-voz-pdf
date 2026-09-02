@@ -20,15 +20,19 @@
     .acciones button { padding: 10px 15px; margin: 5px; background: #005a9e; color: #fff; border: none; border-radius: 4px; }
     .acciones button:hover { background: #ff6600; }
 
-    /* Responsividad */
+       /* Responsividad para tablets y móviles */
     @media (max-width: 768px) {
-      .grid { 
-        grid-template-columns: 1fr; 
-      }
+      .grid { grid-template-columns: 1fr; }
       .campo { display: block; margin-bottom: 15px; }
       .campo label { display: block; margin-bottom: 5px; }
       .campo input, .campo textarea { width: 100%; margin-bottom: 5px; }
       .campo div { margin-top: 5px; }
+    }
+
+    @media (max-width: 480px) {
+      header h1 { font-size: 16px; }
+      .acciones button { width: 100%; margin: 8px 0; }
+      .campo button { width: 48%; margin: 2px 1%; }
     }
   </style>
 </head>
