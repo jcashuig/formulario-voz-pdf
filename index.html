@@ -2,10 +2,10 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Ficha de notificación de alerta</title>
+  <title>Ficha de notificacion de alerta</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <style>
-    body { font-family: Arial, sans-serif; margin: 40px; background: #f4f4f4; }
+    body { font-family: Arial, sans-serif; margin: 20px; background: #f4f4f4; }
     .formulario { background: #fff; padding: 20px; border-radius: 8px; max-width: 1000px; margin: auto; border: 3px solid #005a9e; }
     header { background: linear-gradient(90deg, #005a9e, #ff6600); padding: 15px; color: #fff; text-align: center; border-radius: 6px; margin-bottom: 20px; }
     header h1 { margin: 0; font-size: 20px; }
@@ -19,6 +19,17 @@
     .acciones { text-align: center; margin-top: 20px; }
     .acciones button { padding: 10px 15px; margin: 5px; background: #005a9e; color: #fff; border: none; border-radius: 4px; }
     .acciones button:hover { background: #ff6600; }
+
+    /* Responsividad */
+    @media (max-width: 768px) {
+      .grid { 
+        grid-template-columns: 1fr; 
+      }
+      .campo { display: block; margin-bottom: 15px; }
+      .campo label { display: block; margin-bottom: 5px; }
+      .campo input, .campo textarea { width: 100%; margin-bottom: 5px; }
+      .campo div { margin-top: 5px; }
+    }
   </style>
 </head>
 <body>
@@ -28,6 +39,7 @@
     </header>
     <div class="grid">
       <!-- Campos -->
+     
       <div class="campo"><label for="campo1">Nombre y apellido estudiante:</label><input type="text" id="campo1"><div><button onclick="grabar(1)">🎤</button><button onclick="limpiar(1)">❌</button></div></div>
       <div class="campo"><label for="campo2">Grado/Curso y Paralelo:</label><input type="text" id="campo2"><div><button onclick="grabar(2)">🎤</button><button onclick="limpiar(2)">❌</button></div></div>
       <div class="campo"><label for="campo3">Descripción de la alerta:</label><input type="text" id="campo3"><div><button onclick="grabar(3)">🎤</button><button onclick="limpiar(3)">❌</button></div></div>
@@ -37,6 +49,7 @@
       <div class="campo"><label for="campo7">Cargo:</label><input type="text" id="campo7"><div><button onclick="grabar(7)">🎤</button><button onclick="limpiar(7)">❌</button></div></div>
       <div class="campo"><label for="campo8">Contacto:</label><input type="text" id="campo8"><div><button onclick="grabar(8)">🎤</button><button onclick="limpiar(8)">❌</button></div></div>
       <div class="campo"><label for="campo9">Fecha de entrega:</label><textarea id="campo9"></textarea><div><button onclick="grabar(9)">🎤</button><button onclick="limpiar(9)">❌</button></div></div>
+ 
     </div>
 
     <div class="acciones">
@@ -100,7 +113,7 @@
         }
       }
 
-      doc.save("Ficha de notificación de alerta.pdf");
+      doc.save("ficha_de_alerta.pdf");
     }
   </script>
 </body>
