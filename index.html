@@ -2,18 +2,20 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>FICHA DE NOTIFICACIÓN DE ALERTA</title>
+  <title>Ficha de notificación de alerta</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <style>
     body { font-family: Arial, sans-serif; margin: 40px; background: #f4f4f4; }
-    .formulario { background: #fff; padding: 20px; border-radius: 8px; max-width: 1000px; margin: auto; }
+    .formulario { background: #fff; padding: 20px; border-radius: 8px; max-width: 1000px; margin: auto; border: 3px solid #005a9e; }
+    header { background: linear-gradient(90deg, #005a9e, #ff6600); padding: 15px; color: #fff; text-align: center; border-radius: 6px; margin-bottom: 20px; }
+    header h1 { margin: 0; font-size: 20px; }
     .grid { display: grid; grid-template-columns: 200px 1fr 150px; gap: 15px; align-items: center; }
     .campo { display: contents; }
     .campo label { font-weight: bold; color: #005a9e; }
     .campo input, .campo textarea { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; }
     .campo button { margin: 2px; padding: 8px; background: #0078d7; color: #fff; border: none; border-radius: 4px; cursor: pointer; }
     .campo button:hover { background: #ff6600; }
-    #preview { margin-top: 20px; background: #fff; padding: 15px; border-radius: 8px; }
+    #preview { margin-top: 20px; background: #fff; padding: 15px; border-radius: 8px; border: 1px solid #ccc; }
     .acciones { text-align: center; margin-top: 20px; }
     .acciones button { padding: 10px 15px; margin: 5px; background: #005a9e; color: #fff; border: none; border-radius: 4px; }
     .acciones button:hover { background: #ff6600; }
@@ -21,7 +23,9 @@
 </head>
 <body>
   <div class="formulario">
-    <h2 style="color:#005a9e;">Formulario Institucional 🎤</h2>
+    <header>
+      <h1>Institución Ejemplo - Formulario Institucional</h1>
+    </header>
     <div class="grid">
       <!-- Campos -->
       <div class="campo"><label for="campo1">Nombre:</label><input type="text" id="campo1"><div><button onclick="grabar(1)">🎤</button><button onclick="limpiar(1)">❌</button></div></div>
@@ -71,30 +75,32 @@
       const { jsPDF } = window.jspdf;
       const doc = new jsPDF({ unit: "mm", format: "a4" });
 
-      // Encabezado institucional
-      doc.setFillColor(0, 90, 158); // azul
-      doc.rect(0, 0, 210, 20, "F");
-      doc.setTextColor(255, 255, 255);
-      doc.setFontSize(16);
-      doc.text("Institución Ejemplo - Formulario", 105, 12, { align: "center" });
+      // Configuración de márgenes individuales por campo
+      const posiciones = {
+        campo1: { x: 20, y: 40 },
+        campo2: { x: 20, y: 60 },
+        campo3: { x: 20, y: 80 },
+        campo4: { x: 20, y: 100 },
+        campo5: { x: 20, y: 120 },
+        campo6: { x: 20, y: 140 },
+        campo7: { x: 20, y: 160 },
+        campo8: { x: 20, y: 180 },
+        campo9: { x: 20, y: 200 }
+      };
 
-      // Logo naranja (ejemplo)
-      doc.setFillColor(255, 102, 0);
-      doc.rect(10, 5, 10, 10, "F");
-
-      // Solo información ingresada
       doc.setTextColor(0, 0, 0);
       doc.setFontSize(12);
-      let y = 40;
+
+      // Solo información ingresada
       for (let i = 1; i <= 9; i++) {
         const valor = document.getElementById("campo"+i).value;
         if (valor.trim() !== "") {
-          doc.text(valor, 20, y, { maxWidth: 170 });
-          y += 20; // espacio amplio para cada texto
+          const pos = posiciones["campo" + i];
+          doc.text(valor, pos.x, pos.y, { maxWidth: 170 });
         }
       }
 
-      doc.save("FICHA_DE_NOTIFICACIÓN_DE_ALERTA.pdf");
+      doc.save("Ficha de notificación de alerta.pdf");
     }
   </script>
 </body>
