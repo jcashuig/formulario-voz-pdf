@@ -20,13 +20,14 @@
     .acciones button { padding: 10px 15px; margin: 5px; background: #005a9e; color: #fff; border: none; border-radius: 4px; }
     .acciones button:hover { background: #ff6600; }
 
-       /* Responsividad para tablets y móviles */
+    /* Responsividad para móviles */
     @media (max-width: 768px) {
-      .grid { grid-template-columns: 1fr; }
-      .campo { display: block; margin-bottom: 15px; }
-      .campo label { display: block; margin-bottom: 5px; }
+      .campo { flex-direction: column; align-items: stretch; }
+      .campo label { margin-bottom: 5px; }
       .campo input, .campo textarea { width: 100%; margin-bottom: 5px; }
-      .campo div { margin-top: 5px; }
+      .campo .botones { justify-content: flex-start; }
+      .campo button { flex: none; width: 48%; }
+      .acciones button { width: 100%; margin: 8px 0; }
     }
 
     @media (max-width: 480px) {
